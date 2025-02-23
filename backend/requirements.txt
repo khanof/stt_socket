@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+websockets
+numpy
+faster-whisper
+soundfile
+pydub
+ffmpeg

@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    environment:
+      - WHISPER_MODEL=base  # Set to base model
+    volumes:
+      - ./backend:/app
+      - ./backend/logs:/app/logs  # Mount logs folder
+    deploy:
+      replicas: 1
+   
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8000"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 1
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+        # condition: service_healthy
